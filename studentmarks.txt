@@ -1,0 +1,182 @@
+# creation of table and enter details into table.
+
+use studentmarks
+
+db.createCollection("Grades")
+
+db.Grades.insert_many([{"StudentId":101,"Name":"Alex","Marks":90,"Grade":"A","Date":"2023-11-10"},
+
+                       {"StudentId":102,"Name":"John","Marks":80,"Grade":"B","Date":"2023-10-11"},
+
+                       {"StudentId":103,"Name":"Sam","Marks":92,"Grade":"A","Date":"2023-11-10"},
+
+                       {"StudentId":104,"Name":"Rob","Marks":74,"Grade":"C","Date":"2023-11-10"},
+
+                       {"StudentId":105,"Name":"Jax","Marks":93,"Grade":"A","Date":"2023-10-11"}]);
+
+
+1) Find out the student details whose marks are divisible by 5.
+
+query: db.Grades.find({"Marks": {$mod: [5, 0]}});
+OUTPUT:
+[
+  {
+    _id: '63d3d6fcd38db055e77d945b',
+    StudentId: 101,
+    Name: 'Alex',
+    Marks: 90,
+    Grade: 'A',
+    Date: '23-11-10'
+  },
+  {
+    _id: ObjectId("63d49aaaf8a30c4701bb3d9e"),
+    StudentId: 102,
+    Name: 'John',
+    Marks: 80,
+    Grade: 'B',
+    Date: '2023-10-11'
+  }
+]
+
+
+2) List all the student details ending with the “x” letter.
+
+Query: db.Grades.find({"Name": /x$/});
+OUTPUT:
+[
+  {
+    _id: '63d3d6fcd38db055e77d945b',
+    StudentId: 101,
+    Name: 'Alex',
+    Marks: 90,
+    Grade: 'A',
+    Date: '23-11-10'
+  },
+  {
+    _id: ObjectId("63d49b79f8a30c4701bb3da1"),
+    StudentId: 105,
+    Name: 'Jax',
+    Marks: 93,
+    Grade: 'A',
+    Date: '2023-10-11'
+  }
+]
+
+3) List all the student details whose name starts with the “J” letter.
+
+Query: db.Grades.find({"Name": /J/});
+OUTPUT:
+[
+  {
+    _id: ObjectId("63d49aaaf8a30c4701bb3d9e"),
+    StudentId: 102,
+    Name: 'John',
+    Marks: 80,
+    Grade: 'B',
+    Date: '2023-10-11'
+  },
+  {
+    _id: ObjectId("63d49b79f8a30c4701bb3da1"),
+    StudentId: 105,
+    Name: 'Jax',
+    Marks: 93,
+    Grade: 'A',
+    Date: '2023-10-11'
+  }
+]
+
+
+4) List all the students' details as per the name in alphabetical order.
+
+Query:db.Grades.find().sort({"Name": 1})
+OUTPUT:
+[
+  {
+    _id: '63d3d6fcd38db055e77d945b',
+    StudentId: 101,
+    Name: 'Alex',
+    Marks: 90,
+    Grade: 'A',
+    Date: '23-11-10'
+  },
+  {
+    _id: ObjectId("63d49b79f8a30c4701bb3da1"),
+    StudentId: 105,
+    Name: 'Jax',
+    Marks: 93,
+    Grade: 'A',
+    Date: '2023-10-11'
+  },
+  {
+    _id: ObjectId("63d49aaaf8a30c4701bb3d9e"),
+    StudentId: 102,
+    Name: 'John',
+    Marks: 80,
+    Grade: 'B',
+    Date: '2023-10-11'
+  },
+  {
+    _id: ObjectId("63d49b58f8a30c4701bb3da0"),
+    StudentId: 104,
+    Name: 'Rob',
+    Marks: 74,
+    Grade: 'C',
+    Date: '2023-11-10'
+  },
+  {
+    _id: ObjectId("63d49b10f8a30c4701bb3d9f"),
+    StudentId: 103,
+    Name: 'Sam',
+    Marks: 92,
+    Grade: 'A',
+    Date: '2023-11-10'
+  }
+]
+
+
+5) List all the student details whose marks and grades are updated on the same date.
+
+Query: db.Grades.find( { $expr: { $eq: [ "$Marks.updated_at", "$Grade.updated_at"] } })
+OUTPUT:
+[
+  {
+    _id: '63d3d6fcd38db055e77d945b',
+    StudentId: 101,
+    Name: 'Alex',
+    Marks: 90,
+    Grade: 'A',
+    Date: '2023-11-10'
+  },
+  {
+    _id: ObjectId("63d49aaaf8a30c4701bb3d9e"),
+    StudentId: 102,
+    Name: 'John',
+    Marks: 80,
+    Grade: 'B',
+    Date: '2023-10-11'
+  },
+  {
+    _id: ObjectId("63d49b10f8a30c4701bb3d9f"),
+    StudentId: 103,
+    Name: 'Sam',
+    Marks: 92,
+    Grade: 'A',
+    Date: '2023-11-10'
+  },
+  {
+    _id: ObjectId("63d49b58f8a30c4701bb3da0"),
+    StudentId: 104,
+    Name: 'Rob',
+    Marks: 74,
+    Grade: 'C',
+    Date: '2023-11-10'
+  },
+  {
+    _id: ObjectId("63d49b79f8a30c4701bb3da1"),
+    StudentId: 105,
+    Name: 'Jax',
+    Marks: 93,
+    Grade: 'A',
+    Date: '2023-10-11'
+  }
+]

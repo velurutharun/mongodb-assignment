@@ -1,0 +1,118 @@
+use Students
+
+db.createCollection("points")
+
+db.Submission.insert_many([{"ID":101,"Email":"a@a.com","Name":"Alex","Department":"CSE","Submission":1,"Grade":"N.A"},
+
+                           {"ID":102,"Email":"b@a.com","Name":"John","Department":"CIVIL","Submission":0,"Grade":"N.A"}
+
+                           {"ID":103,"Email":"c@c.com","Name":"Sam","Department":"CSE","Submission":0,"Grade":"N.A"}
+
+                           {"ID":104,"Email":"d@d.com","Name":"Rob","Department":"ELECTRONICS","Submission":1,"Grade":"N.A"}]);
+
+
+1] Find the records of all the students who have submitted their assignments.
+
+INPUT:
+Students> db.Submission.find({"Submission":1});
+OUTPUT:
+[
+  {
+    _id: ObjectId("63d49dc5f8a30c4701bb3da2"),
+    ID: 101,
+    Email: 'a@a.com',
+    Name: 'Alex',
+    Department: 'CSE',
+    Submission: 1,
+    Grade: 'N.A'
+  },
+  {
+    _id: ObjectId("63d49e5ef8a30c4701bb3da5"),
+    ID: 719,
+    Email: 'd@d.com',
+    Name: 'Rob',
+    Department: 'ELECTRONICS',
+    Submission: 1,
+    Grade: 'N.A'
+  }
+]
+
+
+2] Assign grade C to those students who have not submitted their assignments.
+
+INPUT:
+Students> db.Submission.aggregate([{"$match":{"Submission":0}},{"$set":{"Grade":"C"}}]);
+OUTPUT:
+[
+  {
+    _id: ObjectId("63d49df6f8a30c4701bb3da3"),
+    ID: 203,
+    Email: 'b@a.com',
+    Name: 'John',
+    Department: 'CIVIL',
+    Submission: 0,
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId("63d49e2cf8a30c4701bb3da4"),
+    ID: 305,
+    Email: 'c@c.com',
+    Name: 'Sam',
+    Department: 'CSE',
+    Submission: 0,
+    Grade: 'C'
+  }
+]
+
+
+3] Assign grade A to those students who have submitted their assignments.
+
+INPUT:
+Students> db.Submission.aggregate([{"$match":{"Submission":1}},{"$set":{"Grade":"A"}}]);
+OUTPUT:
+[
+  {
+    _id: ObjectId("63d49dc5f8a30c4701bb3da2"),
+    ID: 101,
+    Email: 'a@a.com',
+    Name: 'Alex',
+    Department: 'CSE',
+    Submission: 1,
+    Grade: 'A'
+  },
+  {
+    _id: ObjectId("63d49e5ef8a30c4701bb3da5"),
+    ID: 719,
+    Email: 'd@d.com',
+    Name: 'Rob',
+    Department: 'ELECTRONICS',
+    Submission: 1,
+    Grade: 'A'
+  }
+]
+
+
+4] Insert a document with id as 812, name as “Rick”, email as  e@e.com, submission as 1, and grade as N.A.
+
+INPUT:
+Students> db.Submission.insert({"ID":812,"Email":"e@e.com","Name":"Rick","Department":"ELECTRONICS","Submission":1,"Grade":"N.A"});
+OUTPUT:
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("63d4a8ccf8a30c4701bb3da6") }
+}
+
+5] Update the department of Sam as “MECHANICAL”.
+
+INPUT:
+Students> db.Submission.updateOne({"Name":"Sam"},{"$set":{"Department":"MECHANICAL"}});
+OUTPUT:
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
