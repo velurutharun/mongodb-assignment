@@ -2,7 +2,7 @@ use Students
 
 db.createCollection("points")
 
-db.Submission.insert_many([{"ID":101,"Email":"a@a.com","Name":"Alex","Department":"CSE","Submission":1,"Grade":"N.A"},
+db.points.insert_many([{"ID":101,"Email":"a@a.com","Name":"Alex","Department":"CSE","Submission":1,"Grade":"N.A"},
 
                            {"ID":102,"Email":"b@a.com","Name":"John","Department":"CIVIL","Submission":0,"Grade":"N.A"}
 
@@ -14,7 +14,7 @@ db.Submission.insert_many([{"ID":101,"Email":"a@a.com","Name":"Alex","Department
 1] Find the records of all the students who have submitted their assignments.
 
 INPUT:
-Students> db.Submission.find({"Submission":1});
+Students> db.points.find({"Submission":1});
 OUTPUT:
 [
   {
@@ -41,7 +41,7 @@ OUTPUT:
 2] Assign grade C to those students who have not submitted their assignments.
 
 INPUT:
-Students> db.Submission.aggregate([{"$match":{"Submission":0}},{"$set":{"Grade":"C"}}]);
+Students> db.points.aggregate([{"$match":{"Submission":0}},{"$set":{"Grade":"C"}}]);
 OUTPUT:
 [
   {
@@ -68,7 +68,7 @@ OUTPUT:
 3] Assign grade A to those students who have submitted their assignments.
 
 INPUT:
-Students> db.Submission.aggregate([{"$match":{"Submission":1}},{"$set":{"Grade":"A"}}]);
+Students> db.points.aggregate([{"$match":{"Submission":1}},{"$set":{"Grade":"A"}}]);
 OUTPUT:
 [
   {
@@ -95,7 +95,7 @@ OUTPUT:
 4] Insert a document with id as 812, name as “Rick”, email as  e@e.com, submission as 1, and grade as N.A.
 
 INPUT:
-Students> db.Submission.insert({"ID":812,"Email":"e@e.com","Name":"Rick","Department":"ELECTRONICS","Submission":1,"Grade":"N.A"});
+Students> db.points.insert({"ID":812,"Email":"e@e.com","Name":"Rick","Department":"ELECTRONICS","Submission":1,"Grade":"N.A"});
 OUTPUT:
 {
   acknowledged: true,
@@ -105,7 +105,7 @@ OUTPUT:
 5] Update the department of Sam as “MECHANICAL”.
 
 INPUT:
-Students> db.Submission.updateOne({"Name":"Sam"},{"$set":{"Department":"MECHANICAL"}});
+Students> db.points.updateOne({"Name":"Sam"},{"$set":{"Department":"MECHANICAL"}});
 OUTPUT:
 {
   acknowledged: true,
